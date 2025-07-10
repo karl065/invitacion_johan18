@@ -59,10 +59,10 @@
 
 			@keyframes glow-blue {
 				0% {
-					text-shadow: 0 0 10px #3399ff, 0 0 20px #3399ff;
+					text-shadow: 0 0 10px #cbfd7a, 0 0 20px #3399ff;
 				}
 				100% {
-					text-shadow: 0 0 20px #0066ff, 0 0 40px #0066ff;
+					text-shadow: 0 0 20px #ffffff, 0 0 40px #0066ff;
 				}
 			}
 			@keyframes glow-red {
@@ -79,15 +79,18 @@
 				animation: glow 2s infinite alternate;
 			}
 			.glow-gold {
+				font-size: 1.5em;
 				color: #ff0;
 				animation: glow-gold 2s infinite alternate;
 			}
 
 			.glow-blue {
+				font-size: 1.5em;
 				color: #33ccff;
 				animation: glow-blue 2s infinite alternate;
 			}
 			.glow-red {
+				font-size: 1.5em;
 				color: #ff0000;
 				animation: glow-red 2s infinite alternate;
 			}
@@ -221,5 +224,11 @@
 				Tu navegador no soporta audio.
 			</audio>
 		</div>
+		<script>
+			$(document).ready(function () {
+				var sonido = new Audio('sonido.wav');
+				sonido.play();
+			});
+		</script>
 	</body>
 </html>
