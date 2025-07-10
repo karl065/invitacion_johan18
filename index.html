@@ -225,12 +225,20 @@
 			</audio>
 		</div>
 		<script>
-			const playSound = function () {
-				var sonido = new Audio('archivo-audio.mp3');
-				sonido.play();
-				document.removeEventListener('click', playSound);
-			};
-			document.addEventListener('click', playSound);
+			const audio = document.getElementById('music');
+
+			function activarSonido() {
+				audio.play().catch((err) => {
+					console.log('Reproducción bloqueada hasta interacción:', err);
+				});
+				document.removeEventListener('click', activarSonido);
+				document.removeEventListener('scroll', activarSonido);
+				document.removeEventListener('touchstart', activarSonido);
+			}
+
+			document.addEventListener('click', activarSonido);
+			document.addEventListener('scroll', activarSonido);
+			document.addEventListener('touchstart', activarSonido);
 		</script>
 	</body>
 </html>
