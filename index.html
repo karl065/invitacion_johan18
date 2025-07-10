@@ -219,31 +219,66 @@
 					>📲 WhatsApp</a
 				>
 			</div>
-			<audio
-				id="music"
-				controls
-				autoplay
-				loop
-				style="width: 100px; height: 60px">
+			<audio id="music" preload="auto" loop>
 				<source src="no_crezcas_mas.mp3" type="audio/mpeg" />
 				Tu navegador no soporta audio.
 			</audio>
-		</div>
-		<script>
-			const audio = document.getElementById('music');
-
-			function activarSonido() {
-				audio.play().catch((err) => {
-					console.log('Reproducción bloqueada hasta interacción:', err);
-				});
-				document.removeEventListener('click', activarSonido);
-				document.removeEventListener('scroll', activarSonido);
-				document.removeEventListener('touchstart', activarSonido);
-			}
-
-			document.addEventListener('click', activarSonido);
-			document.addEventListener('scroll', activarSonido);
-			document.addEventListener('touchstart', activarSonido);
-		</script>
+			
+			<!-- Botón de control de música -->
+			<button id="btnPlayMusic" style="
+				position: fixed;
+				bottom: 20px;
+				left: 20px;
+				z-index: 9999;
+				padding: 10px 20px;
+				font-size: 1em;
+				display: none;
+				border-radius: 20px;
+				border: none;
+				background: #ff0;
+				color: #000;
+				font-weight: bold;
+				box-shadow: 0 0 10px rgba(0,0,0,0.3);
+			">
+				🔊 Activar música
+			</button>
+			
+			<script>
+				const audio = document.getElementById('music');
+				const btn = document.getElementById('btnPlayMusic');
+			
+				function toggleAudio() {
+					if (audio.paused) {
+						audio.play().then(() => {
+							btn.textContent = '🔇 Detener música';
+						}).catch((err) => {
+							console.log('Error al intentar reproducir:', err);
+						});
+					} else {
+						audio.pause();
+						btn.textContent = '🔊 Activar música';
+					}
+				}
+			
+				// Primera interacción para desbloquear reproducción
+				function activarSonidoInicial() {
+					audio.play().then(() => {
+						btn.textContent = '🔇 Detener música';
+						btn.style.display = 'block';
+					}).catch((err) => {
+						console.log('Bloqueado. Mostrar botón manual.', err);
+						btn.style.display = 'block';
+						btn.textContent = '🔊 Activar música';
+					});
+			
+					document.removeEventListener('click', activarSonidoInicial);
+					document.removeEventListener('touchstart', activarSonidoInicial);
+				}
+			
+				btn.addEventListener('click', toggleAudio);
+				document.addEventListener('click', activarSonidoInicial, { once: true });
+				document.addEventListener('touchstart', activarSonidoInicial, { once: true });
+			</script>
+			
 	</body>
 </html>
